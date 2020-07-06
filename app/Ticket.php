@@ -7,19 +7,13 @@ use Vinkla\Hashids\Facades\Hashids;
 
 class Ticket extends Model
 {
-    public static function boot() {
-
-        parent::boot();
+    protected $fillable = [
+        'id',
+        'hashid',
+        'event_id',
+        'user_id',
+    ];
     
-        static::creating(function ($ticket) {
-            $rand_number = rand();
-
-            $ticket->id = $rand_number;
-            $ticket->hashid = strtoupper(Hashids::encode($rand_number));
-
-            $ticket->save();
-        });
-    }
     /** 
      * ===============================================================
      * RELS
@@ -28,6 +22,9 @@ class Ticket extends Model
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+    public function event() {
+        return $this->belongsTo(Event::class);
     }
     
 }

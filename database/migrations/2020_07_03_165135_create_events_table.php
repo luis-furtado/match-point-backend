@@ -26,6 +26,7 @@ class CreateEventsTable extends Migration
             $table->dateTime('date');
             $table->double('price', 8, 2)->nullable();
             $table->text('description');
+            $table->unsignedBigInteger('tickets_available');
 
             $table->foreign('event_category_id')->references('id')->on('event_categories');
             $table->foreign('user_id')->references('id')->on('users');

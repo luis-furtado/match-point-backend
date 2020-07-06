@@ -24,6 +24,15 @@ class DatabaseSeeder extends Seeder
         DB::table('event_categories')->insert([
             'name'  => 'Show Sertanejo',
         ]);
+        DB::table('event_categories')->insert([
+            'name'  => 'House',
+        ]);
+        DB::table('event_categories')->insert([
+            'name'  => 'Show Funk',
+        ]);
+        DB::table('event_categories')->insert([
+            'name'  => 'Show Rap',
+        ]);
 
         //events
         DB::table('events')->insert([
@@ -35,12 +44,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ',
             'user_id' => 1,
             'event_category_id' => 1,
-        ]);
-
-        //tickets
-        DB::table('tickets')->insert([
-            'event_id' => 1,
-            'user_id' => 1,
+            'tickets_available' => 10,
         ]);
 
     }

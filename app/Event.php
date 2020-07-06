@@ -8,6 +8,8 @@ class Event extends Model
 {
     protected $guarded = [];
 
+    // protected $fillable = ['*'];
+
     /** 
      * ===============================================================
      * RELATIONSHIP
@@ -19,5 +21,23 @@ class Event extends Model
     }
     public function eventCategory() {
         return $this->belongsTo(EventCategory::class);
+    }
+    public function tickets() {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /** 
+     * ===============================================================
+     * METHODS
+     * METHODS
+     * METHODS
+     */
+    public function hasAvailableTickets() {
+        return (bool) $this->tickets_available;
+    }
+
+    public function decrementAvailableTickets() {
+        $this->tickets_available--;
+        $this->save();
     }
 }

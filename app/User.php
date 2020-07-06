@@ -11,6 +11,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $appends = [
+        'total_tickets',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,5 +67,16 @@ class User extends Authenticatable
         
         return $this->api_token;
     }
+
+    /** 
+     * ===============================================================
+     * ATTRIBUTES
+     * ATTRIBUTES
+     * ATTRIBUTES
+     */
+    public function getTotalTicketsAttribute() {
+        return $this->tickets()->count();
+    }
+    
     
 }
