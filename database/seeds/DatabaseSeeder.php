@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
     {
         //users
         DB::table('users')->insert([
-            'name' => 'Luis Furtado',
-            'email' => 'luiscesm1@gmail.com',
+            'name' => 'Fulano de tal',
+            'email' => 'fulanodetal@gmail.com',
             'phone' => '61999137803',
-            'password' => Hash::make('99868234'),
+            'password' => Hash::make('123456789'),
         ]);
 
         //event categories
