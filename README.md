@@ -8,5 +8,7 @@ Server created to process MatchPoint app.
 
 * 2. Configure your database connection on `.env` file
 
-* 3. Run migrations and seeders with `php artisan serve` command
+* 3. Run migrations and seeders with `php artisan migrate:fresh --seed` command
+
+* 4. Up the server with `php artisan serve` command
 
