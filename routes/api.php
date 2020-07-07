@@ -38,8 +38,29 @@ Route::post('login', 'Auth\LoginController@login');
 
 
 Route::middleware('auth:api')->group(function () {
+
+    Route::post('/user/logout', function(Request $request) {
+        $request->user()->removeToken();
+        if(!$request->user()->api_token) {
+            return response('User Logouted', 200);
+        }
+    });
+
+    Route::post('/user/edit', function(Request $request) {
+        $user = $request->user();
+        $user->fill($request->all());
+        if($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+
+        return response('User updated', 200);
+    });
+
+
     Route::get('/user/events', function(Request $request) {
-        return $request->user()->events()->get();
+        $user = $request->user();
+        return $user->events()->with('eventCategory')->get();
     });
 
     Route::post('/user/events/create', function(Request $request) {

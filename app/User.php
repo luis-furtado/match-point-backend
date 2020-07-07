@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
+use Vinkla\Hashids\Facades\Hashids;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -68,6 +70,11 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
+    public function removeToken() {
+        $this->api_token = null;
+        $this->save();
+    }
+
     /** 
      * ===============================================================
      * ATTRIBUTES
@@ -76,7 +83,6 @@ class User extends Authenticatable
      */
     public function getTotalTicketsAttribute() {
         return $this->tickets()->count();
-    }
-    
+    }   
     
 }
