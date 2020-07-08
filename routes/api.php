@@ -74,6 +74,15 @@ Route::middleware('auth:api')->group(function () {
         return $event;
     });
 
+    Route::post('/user/events/edit', function(Request $request) {
+        $event = Event::findOrFail($request->id);
+        $event->fill($request->all());
+        $event->save();
+
+        return $event;
+
+    });
+
     Route::get('/user/tickets', function(Request $request) {
         return $request->user()->tickets()->with('event')->get();
     });
@@ -100,5 +109,5 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::get('/events', function(Request $request) {
-    return Event::with('eventCategory')->get();
+    return Event::where('tickets_available', "!=", 0)->with('eventCategory')->get();
 });
