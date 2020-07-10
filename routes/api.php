@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 //Models
 use \App\Event;
@@ -36,7 +38,6 @@ Route::group(['prefix' => 'users/register'], function () {
 
 Route::post('login', 'Auth\LoginController@login');
 
-
 Route::middleware('auth:api')->group(function () {
 
     Route::post('/user/logout', function(Request $request) {
@@ -63,17 +64,6 @@ Route::middleware('auth:api')->group(function () {
         return $user->events()->with('eventCategory')->get();
     });
 
-    Route::post('/user/events/create', function(Request $request) {
-        $event = new Event;
-        $event = $event->fill($request->all());
-        $event->user_id = $request->user()->id;
-        $event->event_category_id = $request->event_category_id;
-
-        $event->save();
-
-        return $event;
-    });
-
     Route::post('/user/events/edit', function(Request $request) {
         $event = Event::findOrFail($request->id);
         $event->fill($request->all());
@@ -82,6 +72,23 @@ Route::middleware('auth:api')->group(function () {
         return $event;
 
     });
+
+
+Route::post('/user/events/create', function(Request $request) {
+
+    $event = new Event;
+    $event = $event->fill($request->all());
+
+    //rellations
+    $event->user_id = $request->user()->id;
+    $event->event_category_id = $request->event_category_id;
+
+    $event->save();
+
+    return $event;
+});
+
+
 
     Route::get('/user/tickets', function(Request $request) {
         return $request->user()->tickets()->with('event')->get();
